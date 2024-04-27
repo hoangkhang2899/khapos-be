@@ -8,11 +8,3 @@ public class Product
     public string? Name { get; set; }
     public decimal Price { get; set; }
 }
-
-public class ProductContext : DbContext
-{
-    public ProductContext(DbContextOptions options) : base(options)
-    {
-    }
-    public DbSet<Product> Products { get; set; } = null!;
-}

@@ -1,3 +1,4 @@
+using KhaPOS_BE.Data;
 using KhaPOS_BE.Interfaces;
 using KhaPOS_BE.Models;
 
@@ -7,9 +8,9 @@ namespace KhaPOS_BE.Services;
 
 public class ProductService : IProductService
 {
-    private readonly ProductContext _context;
+    private readonly Context _context;
 
-    public ProductService(ProductContext context)
+    public ProductService(Context context)
     {
         _context = context;
     }

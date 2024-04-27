@@ -1,6 +1,8 @@
+using KhaPOS_BE.Data;
 using KhaPOS_BE.Interfaces;
-using KhaPOS_BE.Models;
 using KhaPOS_BE.Services;
+
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 
-builder.AddNpgsqlDbContext<ProductContext>("Product");
+builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
 var app = builder.Build();
 

@@ -20,4 +20,11 @@ public class ProductService : IProductService
         var result = await _context.Products.ToListAsync();
         return result;
     }
+
+    public async Task<Product> Add(Product product)
+    {
+        _context.Products.Add(product);
+        await _context.SaveChangesAsync();
+        return product;
+    }
 }

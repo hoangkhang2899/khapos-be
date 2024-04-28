@@ -2,13 +2,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KhaPOS_BE.Models;
 
-public class Product
+public class Topping
 {
     public int Id { get; set; }
-    [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = null!;
-    [Required]
+    public string Name { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public ICollection<Topping> Toppings { get; set; } = [];
+
+    public int? ProductId { get; set; }
+    public Product? Product { get; set; }
 }

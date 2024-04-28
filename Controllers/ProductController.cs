@@ -1,4 +1,5 @@
 using KhaPOS_BE.Interfaces;
+using KhaPOS_BE.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,16 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("")]
-    public IActionResult Get()
+    public async Task<ActionResult<IEnumerable<Product>>> Get()
     {
-        return Ok();
+        var result = await _service.Get();
+        return Ok(result);
+    }
+
+    [HttpPost("")]
+    public async Task<ActionResult<Product>> Add(Product product)
+    {
+        var result = await _service.Add(product);
+        return result;
     }
 }

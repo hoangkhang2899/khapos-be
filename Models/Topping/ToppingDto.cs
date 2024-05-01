@@ -5,14 +5,15 @@ namespace KhaPOS_BE.Models;
 public class ToppingGetDto
 {
     public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = null!;
     public decimal Price { get; set; }
     public int ProductId { get; set; }
 }
 
-public class ToppingPostDto
+public class ToppingAddDto
 {
-    [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Topping name is required")]
+    [StringLength(256, ErrorMessage = "Topping name cannot exceed 256 characters")]
+    public string Name { get; set; } = null!;
     public decimal Price { get; set; }
 }

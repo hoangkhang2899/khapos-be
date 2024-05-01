@@ -1,14 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace KhaPOS_BE.Models;
 
 public class Product
 {
     public int Id { get; set; }
-    [Required]
-    [MaxLength(200)]
+    [MaxLength(256)]
     public string Name { get; set; } = null!;
-    [Required]
+    [Precision(20, 8)]
     public decimal Price { get; set; }
-    public ICollection<Topping> Toppings { get; set; } = [];
+    public int? CategoryId { get; set; }
+    public Category? Category { get; set; }
 }

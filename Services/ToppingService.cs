@@ -1,5 +1,3 @@
-using AutoMapper;
-
 using KhaPOS_BE.Data;
 using KhaPOS_BE.Interfaces;
 using KhaPOS_BE.Models;
@@ -11,12 +9,10 @@ namespace KhaPOS_BE.Services;
 public class ToppingService : IToppingService
 {
     private readonly Context _context;
-    private readonly IMapper _mapper;
 
-    public ToppingService(Context context, IMapper mapper)
+    public ToppingService(Context context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<IEnumerable<Topping>> Get()
@@ -25,11 +21,10 @@ public class ToppingService : IToppingService
         return result;
     }
 
-    public async Task<Topping> Add(ToppingAddDto dto)
+    public async Task<Topping> Add(Topping dto)
     {
-        var topping = _mapper.Map<Topping>(dto);
-        _context.Toppings.Add(topping);
+        _context.Toppings.Add(dto);
         await _context.SaveChangesAsync();
-        return topping;
+        return dto;
     }
 }

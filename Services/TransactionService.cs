@@ -1,5 +1,3 @@
-using AutoMapper;
-
 using KhaPOS_BE.Data;
 using KhaPOS_BE.Interfaces;
 using KhaPOS_BE.Models;
@@ -11,12 +9,10 @@ namespace KhaPOS_BE.Services;
 public class TransactionService : ITransactionService
 {
     private readonly Context _context;
-    private readonly IMapper _mapper;
 
-    public TransactionService(Context context, IMapper mapper)
+    public TransactionService(Context context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<IEnumerable<Transaction>> Get()
@@ -25,11 +21,10 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public async Task<Transaction> Add(TransactionAddDto dto)
+    public async Task<Transaction> Add(Transaction dto)
     {
-        var transaction = _mapper.Map<Transaction>(dto);
-        _context.Transactions.Add(transaction);
+        _context.Transactions.Add(dto);
         await _context.SaveChangesAsync();
-        return transaction;
+        return dto;
     }
 }

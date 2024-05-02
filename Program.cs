@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using KhaPOS_BE.Data;
 using KhaPOS_BE.Interfaces;
 using KhaPOS_BE.Models;
@@ -18,11 +20,18 @@ builder.Services.AddControllers(o =>
 }).AddNewtonsoftJson(o =>
 {
     // o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    o.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
     o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+builder.Services.AddProblemDetails();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IToppingService, ToppingService>();
@@ -31,7 +40,9 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddAutoMapper(
     typeof(TransactionMappingProfile),
-    typeof(ToppingMappingProfile)
+    typeof(ToppingMappingProfile),
+    typeof(ProductMappingProfile),
+    typeof(CategoryMappingProfile)
 );
 
 builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
@@ -51,6 +62,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapSwagger().RequireAuthorization();
+app.MapSwagger();
 
 app.Run();

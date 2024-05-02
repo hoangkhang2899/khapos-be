@@ -2,14 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KhaPOS_BE.Models;
 
-public class ToppingGetDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
-    public decimal Price { get; set; }
-    public int ProductId { get; set; }
-}
-
 public class ToppingAddDto
 {
     [Required(ErrorMessage = "Topping name is required")]

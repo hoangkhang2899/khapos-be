@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KhaPOS_BE.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240501170849_Initialize")]
-    partial class Initialize
+    [Migration("20240502183946_Re-init")]
+    partial class Reinit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace KhaPOS_BE.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -83,7 +84,8 @@ namespace KhaPOS_BE.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasPrecision(20, 8)
+                        .HasColumnType("numeric(20,8)");
 
                     b.HasKey("Id");
 
@@ -165,7 +167,8 @@ namespace KhaPOS_BE.Migrations
                 {
                     b.HasOne("KhaPOS_BE.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Category");
                 });

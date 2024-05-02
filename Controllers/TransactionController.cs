@@ -1,3 +1,5 @@
+using AutoMapper;
+
 using KhaPOS_BE.Interfaces;
 using KhaPOS_BE.Models;
 
@@ -10,9 +12,11 @@ namespace KhaPOS_BE.Controllers;
 public class TransactionController : ControllerBase
 {
     private readonly ITransactionService _service;
-    public TransactionController(ITransactionService service)
+    private readonly IMapper _mapper;
+    public TransactionController(ITransactionService service, IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [HttpGet("")]
@@ -25,7 +29,8 @@ public class TransactionController : ControllerBase
     [HttpPost("")]
     public async Task<ActionResult<Transaction>> Add(TransactionAddDto dto)
     {
-        var result = await _service.Add(dto);
+        var transaction = _mapper.Map<Transaction>(dto);
+        var result = await _service.Add(transaction);
         return result;
     }
 }

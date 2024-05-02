@@ -1,3 +1,5 @@
+using AutoMapper;
+
 using KhaPOS_BE.Interfaces;
 using KhaPOS_BE.Models;
 
@@ -10,9 +12,11 @@ namespace KhaPOS_BE.Controllers;
 public class ToppingController : ControllerBase
 {
     private readonly IToppingService _service;
-    public ToppingController(IToppingService service)
+    private readonly IMapper _mapper;
+    public ToppingController(IToppingService service, IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [HttpGet("")]
@@ -25,7 +29,8 @@ public class ToppingController : ControllerBase
     [HttpPost("")]
     public async Task<ActionResult<Topping>> Add(ToppingAddDto dto)
     {
-        var result = await _service.Add(dto);
+        var topping = _mapper.Map<Topping>(dto);
+        var result = await _service.Add(topping);
         return result;
     }
 }

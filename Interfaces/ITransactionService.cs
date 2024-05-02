@@ -5,5 +5,5 @@ namespace KhaPOS_BE.Interfaces;
 public interface ITransactionService
 {
     Task<IEnumerable<Transaction>> Get();
-    Task<Transaction> Add(TransactionAddDto dto);
+    Task<Transaction> Add(Transaction dto);
 }

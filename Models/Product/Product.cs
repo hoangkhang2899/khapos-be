@@ -12,5 +12,6 @@ public class Product
     [Precision(20, 8)]
     public decimal Price { get; set; }
     public int? CategoryId { get; set; }
+    [DeleteBehavior(DeleteBehavior.SetNull)]
     public Category? Category { get; set; }
 }

@@ -17,7 +17,7 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<Product>> Get()
     {
-        var result = await _context.Products.ToListAsync();
+        var result = await _context.Products.Include(p => p.CategoryId).ToListAsync();
         return result;
     }
 
